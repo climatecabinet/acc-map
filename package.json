@@ -1,0 +1,25 @@
+{
+  "name": "acc-map",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shelbygreen/acc-map.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shelbygreen/acc-map/issues"
+  },
+  "homepage": "https://github.com/shelbygreen/acc-map#readme",
+  "dependencies": {
+    "gatsby": "^2.25.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}
