@@ -1,4 +1,13 @@
 import React from "react"
-export default function Home() {
-  return <h1>Hello Gatsby!</h1>
-}
+import SEO from '../components/seo'
+import Explore from './Explore'
+
+
+const IndexPage = () => (
+    <div>
+        <SEO title='Home' />
+        <Explore />
+    </div>
+)
+
+export default IndexPage
