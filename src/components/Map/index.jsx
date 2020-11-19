@@ -101,8 +101,8 @@ const Map = () => {
         <Wrapper>
             <div ref={mapNode} style={{ width: '100%', height: '100%' }} />
 
-            {mapRef.current && mapRef.current.isStyleLoaded && (
-                <>
+            {/* {mapRef.current && mapRef.current.isStyleLoaded && ( */}
+                {/* <> */}
                     <LayerToggle
                         value={activeLayer}
                         options={[
@@ -111,8 +111,8 @@ const Map = () => {
                         ]}
                         onChange={handleLayerToggle}
                     />
-                </>
-            )}
+                {/* </> */}
+            {/* )} */}
         </Wrapper>
     )
 }
