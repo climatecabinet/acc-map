@@ -69,7 +69,7 @@ const Map = () => {
       
             // add layers
             layers.forEach(layer => {
-              map.addLayer(layer)
+              map.addLayer(layer, 'waterway-label')
             })
 
         })

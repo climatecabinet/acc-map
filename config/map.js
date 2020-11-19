@@ -11,7 +11,6 @@ export const sources = {
     upper: {
         type: 'vector',
         url: 'mapbox://shelby-green.7cjqgdty',
-        // generateId: true
     },
     lower: {
         type: 'vector',
@@ -43,5 +42,5 @@ export const layers = [
           'line-color': '#12E9FF',
           'line-width': 1
         },
-    }
+    },
 ]
