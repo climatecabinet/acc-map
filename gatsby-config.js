@@ -1,27 +1,36 @@
-const config = require('./config/meta')
+const config = require('./config/meta');
+const {createHttpLink} = require("apollo-link-http");
+const fetch = require("isomorphic-fetch");
+// const dotenv = require("dotenv");
+
+// dotenv.config();
 
 module.exports = {
   siteMetadata: {
-    title: `Climate Cabinet's Accountability Map`,
+    title: `Climate Cabinet's Climate Data Explorer`,
     description: `An interactive database to explore climate and socioeconomic data in state legislative districts.`,
-    author: `@shelbygreen`,
+    author: `@sgreen`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-source-graphql',
       options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
+        // arbitrary name for the remote schema query type
+        typeName: 'MongoDB', 
+        // field under which the remote schema will be accessible. will be used in the gatsby query
+        fieldName: 'allMongodbRegions',
+        // create Apollo Link manually. can return a Promise.
+        createLink: () => 
+          createHttpLink({
+            uri: 'https://realm.mongodb.com/api/client/v2.0/app/climate-cabinet-api-nthnl/graphql',
+              headers: {
+                apiKey: `Gr4dAgPfy7SPicuSMaMmpJvSUwMwfChiGpK8rZohFX9YCZBMRubMlKgwIr4uXQRh`
+              },
+              fetch,
+          })
+      }
     },
-    // {
-    //   resolve: `gatsby-source-filesystem`,
-    //   options: {
-    //     name: `data`,
-    //     path: `${__dirname}/data`,
-    //   },
-    // },
     `gatsby-transformer-json`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,

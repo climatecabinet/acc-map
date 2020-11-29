@@ -4,9 +4,19 @@ import { Map } from 'immutable'
 import { FixedSizeList as List } from 'react-window'
 import useDimensions from 'react-use-dimensions'
 
-const sortOptions = [
-    { label: "name" }, 
-    { label: "population" } 
+import {
+    Context as CrossfilterContext,
+    SET_FILTER,
+  } from '../Crossfilter'
+  import { Box, Flex, Columns, Column } from '../Grid'
+  import styled, { themeGet } from '../../../util/style'
+  import SearchBar from './SearchBar'
+  import SortBar from './SortBar'
+  import ListItem from './ListItem'
+
+  const sortOptions = [
+    { label: "state", sortFunc: (a, b) => b.get("state_abbr") - a.get("state_abbr") },
+    { label: "district number", sortFunc: (a, b) => b.get("district_no") - a.get("district_no") }
 ]
 
 export const Wrapper = styled(Flex).attrs({
@@ -30,7 +40,8 @@ export const NoResults = styled(Box)`
     text-align: center;
 `
 
-const StateList = () => {
+const StateList = ({ onSelect }) => {
+    
     return (
         <Wrapper>
             <Columns px="1rem" alignItems="baseline">
