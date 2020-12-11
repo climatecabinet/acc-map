@@ -10,6 +10,7 @@ module.exports = {
     title: `Climate Cabinet's Climate Data Explorer`,
     description: `An interactive database to explore climate and socioeconomic data in state legislative districts.`,
     author: `@sgreen`,
+    mapboxToken: `sk.eyJ1Ijoic2hlbGJ5LWdyZWVuIiwiYSI6ImNraTRrY3l6OTAyNmQycnA0NHk3Z2poYzAifQ.Siioq_NyAblfagX2AUmFpw`
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -31,8 +32,8 @@ module.exports = {
           })
       }
     },
-    `gatsby-transformer-json`,
-    `gatsby-transformer-sharp`,
+    // `gatsby-transformer-json`,
+    // `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
       resolve: `gatsby-plugin-styled-components`,
@@ -47,8 +48,8 @@ module.exports = {
         pathToConfigModule: `./config/typography.js`,
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
+    // `gatsby-transformer-sharp`,
+    // `gatsby-plugin-sharp`,
     `gatsby-plugin-catch-links`,
     {
       resolve: `gatsby-plugin-manifest`,

@@ -72,6 +72,12 @@ const Map = () => {
               map.addLayer(layer, 'waterway-label')
             })
 
+            // match expression that defines the color for every vector tile feature
+            // lookup key for each district (CCID)
+            // const matchExpression = ['match', ['get', 'ccid']]
+
+            // calculate color values for each country based on ashtma value
+
         })
       
     }, [])

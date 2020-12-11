@@ -10,11 +10,11 @@ export const config = {
 export const sources = {
     upper: {
         type: 'vector',
-        url: 'mapbox://shelby-green.7cjqgdty',
+        url: 'mapbox://shelby-green.sldu_mbtiles',
     },
     lower: {
         type: 'vector',
-        url: 'mapbox://shelby-green.0z3cgh6c',
+        url: 'mapbox://shelby-green.sldl_mbtiles',
     }
 }
 

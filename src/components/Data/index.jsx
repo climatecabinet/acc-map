@@ -2,17 +2,14 @@ import { graphql, useStaticQuery } from 'gatsby'
 import { fromJS } from 'immutable'
 import { isDebug } from '../../../util/dom'
 
-/**
- * Custom react hook to wrap getting data using GraphQL in gatsby
- * Returns [data, index]
- */
-
+import React from 'react'
+// const MongoList = ({ mongos }) => {
 export const useData = () => {
   const data = useStaticQuery(graphql`
-  query data {
+  query {
     allMongodbRegions {
       regions {
-          _cls
+          _id
           state_fips
           state_abbr
           ccid
@@ -20,20 +17,51 @@ export const useData = () => {
         }
       }
     }
-`)
+  `).allMongodbRegions.regions.map(region => {
+    const { ccid } = region
 
-// create index of data by ccid
-const index = data.reduce((result, item) => {
-  result[item.ccid] = item
-  return result
-}, {})
+    return { 
+      ...region, 
+      ccid: parseInt(ccid,10)
+    }
+  })
 
-if (isDebug) {
-  window.data = data
-  window.index = index
+  const index = data.reduce((result, item) => {
+    result[item.ccid] = item
+    return result
+  }, {})
+
+  if (isDebug) {
+    window.data = data
+    window.index = index
+  }
+
+  return [fromJS(data), fromJS(index)]
 }
+/* <pre>{JSON.stringify(mongos, null, 2)}</pre> */
+// export default MongoList
 
-// return data as immutable objects
-return [fromJS(data), fromJS(index)]
+/**
+ * Custom react hook to wrap getting data using GraphQL in gatsby
+ * Returns [data, index]
+ */
 
-}
+// const data = useStaticQuery(graphql`
+// query {
+//   allMongodbRegions {
+//     regions {
+//         _id
+//         state_fips
+//         state_abbr
+//         ccid
+//         name
+//       }
+//     }
+//   }
+// `)
+
+// const mongos = data.allMongodbRegions.regions
+
+// const MongoList = ({ mongos }) => <pre>{JSON.stringify(mongos, null, 2)}</pre>
+
+// export default MongoList

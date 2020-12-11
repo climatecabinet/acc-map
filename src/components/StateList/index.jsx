@@ -14,7 +14,8 @@ import {
   import SortBar from './SortBar'
   import ListItem from './ListItem'
 
-  const sortOptions = [
+const sortOptions = [
+    { label: "name", sortFunc: (a, b) => (a.get("name") > b.get("name") ? 1 : -1) },
     { label: "state", sortFunc: (a, b) => b.get("state_abbr") - a.get("state_abbr") },
     { label: "district number", sortFunc: (a, b) => b.get("district_no") - a.get("district_no") }
 ]
@@ -41,12 +42,41 @@ export const NoResults = styled(Box)`
 `
 
 const StateList = ({ onSelect }) => {
-    
+    const { state, dispatch: filterDispatch } = useContext(CrossfilterContext)
+  
+    const listRef = useRef(null)
+    const [listWrapperRef, { height: listHeight }] = useDimensions()
+    const [sortIdx, setSortIdx] = useState(2) // default: high to low 
+  
+    const handleQueryChange = value => {
+      filterDispatch({
+        type: SET_FILTER,
+        payload: {
+          field: 'name',
+          filterValue: value,
+        },
+      })
+    }
+  
+    const handleSortChange = idx => {
+      if (idx === sortIdx) return
+  
+      setSortIdx(idx)
+  
+      // reset list to top
+      if (listRef.current) {
+        listRef.current.scrollTo(0)
+      }
+    }
+  
+    const data = state.get('data')
+    const sortedData = data.sort(sortOptions[sortIdx].sortFunc)
+
     return (
         <Wrapper>
             <Columns px="1rem" alignItems="baseline">
             <Column>
-                <Count> 'data.size' currently visible</Count>
+                <Count> {data.size} currently visible</Count>
             </Column>
             <Column>
                 <SortBar
@@ -58,24 +88,23 @@ const StateList = ({ onSelect }) => {
             </Columns>
 
             <SearchBar
-            // value={state.get("filters", Map()).get("name", "")}
+            value={state.get("filters", Map()).get("name", "")}
             placeholder="Enter the name of a region"
-            // onChange={handleQueryChange}
+            onChange={handleQueryChange}
             />
 
-            {/* {data.size > 0 ? ( */}
-            <ListWrapper> 
-                {/* ref={listWrapperRef} */}
-                {/* {listHeight ? ( */}
+            {data.size > 0 ? (
+            <ListWrapper ref={listWrapperRef}>
+                {listHeight ? (
                 <List
-                    // ref={listRef}
-                    // itemData={sortedData.toJS()}
-                    // height={listHeight}
-                    // itemSize={64}
-                    // itemCount={sortedData.size}
-                    // itemKey={(i, items) => items[i].id}
+                    ref={listRef}
+                    itemData={sortedData.toJS()}
+                    height={listHeight}
+                    itemSize={64}
+                    itemCount={sortedData.size}
+                    itemKey={(i, items) => items[i].id}
                 >
-                    {/* {({ index, data: listData, style }) => {
+                    {({ index, data: listData, style }) => {
                         const item = listData[index]
                         return (
                             <ListItem
@@ -84,13 +113,13 @@ const StateList = ({ onSelect }) => {
                             style={style}
                             />
                         )
-                    }} */}
+                    }}
                 </List>
-                {/* ) : null} */}
+                ) : null}
             </ListWrapper>
-            {/* ) : ( */}
-            {/* <NoResults>No visible regions...</NoResults> */}
-            {/* )} */}
+        ) : (
+            <NoResults>No visible regions...</NoResults>
+        )}
         </Wrapper>
     )
 }
