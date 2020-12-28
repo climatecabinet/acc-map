@@ -8,6 +8,7 @@ import styled from '../../../util/style'
 import { sources, layers,  config } from '../../../config/map'
 import { siteMetadata } from '../../../gatsby-config'
 import { hasWindow } from '../../../util/dom'
+// import {useData} from '../components/Data'
 
 import LayerToggle from './LayerToggle'
 
@@ -19,6 +20,8 @@ const Wrapper = styled.div`
 `
 
 const Map = () => {
+    // const [data, index] = useData()
+
     const { mapboxToken } = siteMetadata
 
     if (!mapboxToken) {
@@ -79,6 +82,55 @@ const Map = () => {
             // calculate color values for each country based on ashtma value
 
         })
+
+        // Build a GL match expression that defines the color for every vector tile feature
+        // Use the ccid as the lookup key for the country shape (mongo data <> ccid <> vector data)
+        const matchExpression = ['match', ['get', 'ccid']];
+
+        // // Calculate color values for each country based on 'hdi' value
+        // // data.forEach(function (row) {
+
+        // // Convert the range of data values to a suitable color
+        // var green = row['hdi'] * 255;
+        // var color = 'rgb(0, '+ green + ', 0)';
+
+        // matchExpression.push(row['code'], color);
+
+        // });
+
+        // // Last value is the default, used where there is no data
+        // matchExpression.push('rgba(0, 0, 0, 0)');
+
+        // // Add layer from the vector tile source to create the choropleth
+        // // Insert it below the 'admin-1-boundary-bg' layer in the style
+        // map.addLayer({
+        // 'id': 'countries-join',
+        // 'type': 'fill',
+        // 'source': 'countries',
+        // 'source-layer': 'country_boundaries',
+        // 'paint': {
+        // 'fill-color': matchExpression
+        // }
+        // }, 'admin-1-boundary-bg');
+ 
+
+        // pop-up features
+        map.on('click', 'upper-layer', function (e) {
+            new mapboxgl.Popup()
+            .setLngLat(e.lngLat)
+            .setHTML(e.features[0].properties.name)
+            .addTo(map);
+        })
+
+        // show popup on click
+        map.on('mouseenter', 'upper-layer', function () {
+            map.getCanvas().style.cursor = 'pointer';
+            })
+             
+        // change it back to a pointer when it leaves
+        map.on('mouseleave', 'upper-layer', function () {
+            map.getCanvas().style.cursor = '';
+        })
       
     }, [])
 
@@ -92,12 +144,12 @@ const Map = () => {
 
         const isUpper = newLayer === 'upper'
         map.setLayoutProperty(
-            'upper-fill',
+            'upper-layer',
             'visibility',
             isUpper ? 'visible' : 'none'
         )
         map.setLayoutProperty(
-            'lower-fill',
+            'lower-layer',
             'visibility',
             isUpper ? 'none' : 'visible'
         )

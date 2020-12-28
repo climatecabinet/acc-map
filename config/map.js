@@ -20,27 +20,27 @@ export const sources = {
 
 export const layers = [
     {
-      id: "upper-fill",
+      id: "upper-layer",
       source: "upper",
       'source-layer': 'sld',
-      type: 'line',
+      type: 'fill',
       paint: {
-        'line-color': '#FF1212',
-        'line-width': 1
+        'fill-color': 'rgba(255, 87, 51, 0.4)',
+        'fill-outline-color': 'rgba(255, 75, 37, 1)'
       },
     },
 
     {
-        id: "lower-fill",
+        id: "lower-layer",
         source: "lower",
         'source-layer': 'sld',
-        type: 'line',
+        type: 'fill',
         layout: {
             visibility: 'none',
         },
         paint: {
-          'line-color': '#12E9FF',
-          'line-width': 1
+            'fill-color': 'rgba(200, 75, 50, 0.4)',
+            'fill-outline-color': 'rgba(200, 75, 37, 1)'
         },
     },
 ]

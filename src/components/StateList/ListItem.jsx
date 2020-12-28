@@ -30,15 +30,15 @@ const Name = styled.div`
     font-weight: normal;
 `
   
-const ListItem = ({ name, state_abbr, district_no, ...props }) => (
+const ListItem = ({ name, ccid, ...props }) => (
     <Wrapper {...props}>
       <Columns>
         <Column>
-          <Name>{state_abbr} {name}</Name>
+          <Name>{name}</Name>
         </Column>
         <Column>
           <Text textAlign="right">
-          District {district_no}
+          CCID: {ccid}
           </Text>
         </Column>
       </Columns>
@@ -47,8 +47,7 @@ const ListItem = ({ name, state_abbr, district_no, ...props }) => (
   
 ListItem.propTypes = {
     ccid: PropTypes.number.isRequired,
-    state_abbr: PropTypes.string.isRequired,
-    district_no: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired
 }
   
 // only rerender on ID change

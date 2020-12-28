@@ -13,6 +13,7 @@ import { Flex } from '../components/Grid'
 import Map from '../components/Map'
 import Sidebar, { SidebarHeader } from '../components/Sidebar'
 import StateList from '../components/StateList'
+import StateDetails from '../components/StateDetails'
 import { isDebug } from '../../util/dom'
 import { filters } from '../../config/filters'
 
@@ -71,20 +72,26 @@ const Explore = () => {
       <CrossfilterProvider data={data} filters={filters}>
         <Layout>
             <SEO title="Explore" />
-            <Wrapper>
+              <Wrapper>
                 <Sidebar allowScroll={false}>
-                  {/* <MongoList mongos={mongos} /> */}
-                    {/* StateDetails */}
-                    <SidebarHeader title="Explore Legislative Districts" icon="map" />
-                    {/* {regions.map(regions => (
-                    <Snippet> {regions.ccid} </Snippet>
-                    ))} */}
+                  {selectedId !== null ? (
+                    <StateDetails
+                      {...index.get(selectedId.toString()).toJS()}
+                      showZoom={showZoom}
+                      onBack={handleBack}
+                      onZoomTo={handleZoomTo}
+                    />
+                  ) : (
+                    <>
+                      <SidebarHeader title="Explore Legislative Districts" icon="map" />
                         <Snippet>
                             This map displays climate and socioeconomic data of every legislative
                             district in the United States. Click on a region in the list below or on the map 
                             for more detailed information.
                         </Snippet>
                         <StateList onSelect={handleSelectFromList}/>
+                    </>
+                  )}
                 </Sidebar>
                 <Map />
             </Wrapper>
