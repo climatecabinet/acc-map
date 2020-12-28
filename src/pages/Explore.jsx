@@ -85,7 +85,7 @@ const Explore = () => {
                     <>
                       <SidebarHeader title="Explore Legislative Districts" icon="map" />
                         <Snippet>
-                            This map displays climate and socioeconomic data of every legislative
+                            !This map displays climate and socioeconomic data of every legislative
                             district in the United States. Click on a region in the list below or on the map 
                             for more detailed information.
                         </Snippet>
