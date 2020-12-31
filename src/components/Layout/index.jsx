@@ -7,7 +7,7 @@ import { isUnsupported } from '../../../util/dom'
 import UnsupportedBrowser from './UnsupportedBrowser'
 
 import Header from './Header'
-import Footer from './Footer'
+// import Footer from './Footer'
 
 import config from '../../../config/meta'
 
@@ -25,7 +25,7 @@ const Layout = ({ children }) => (
     <Wrapper>
       <Header siteTitle={config.siteTitle} />
       {isUnsupported ? <UnsupportedBrowser /> : <Content>{children}</Content>}
-      <Footer />
+      {/* <Footer /> */}
     </Wrapper>
   </ThemeProvider>
 )

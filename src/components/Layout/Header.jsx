@@ -14,12 +14,12 @@ const Wrapper = styled(Flex).attrs({
 })`
   padding: 0.75rem 0.5rem;
   flex: 0 0 auto;
+  background-color: ${themeGet('colors.grey.100')};
   border-bottom: 1px solid ${themeGet('colors.grey.900')};
 `
 
 const Title = styled.h1`
   margin: 0;
-  font-weight: normal;
   flex-grow: 1;
   line-height: 1;
 

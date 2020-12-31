@@ -10,7 +10,7 @@ module.exports = {
     title: `Climate Cabinet's Climate Data Explorer`,
     description: `An interactive database to explore climate and socioeconomic data in state legislative districts.`,
     author: `@sgreen`,
-    mapboxToken: `sk.eyJ1Ijoic2hlbGJ5LWdyZWVuIiwiYSI6ImNraTRrY3l6OTAyNmQycnA0NHk3Z2poYzAifQ.Siioq_NyAblfagX2AUmFpw`
+    mapboxToken: `pk.eyJ1IjoicGFzaWgiLCJhIjoiY2pybzJqdTVjMHJzeDQ0bW80aGdzaXV3ayJ9.yxD8Nqu7FLnf8-lBo7F1zQ`
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
