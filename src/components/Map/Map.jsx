@@ -8,7 +8,7 @@ import Layout from '../Layout'
 // import Sidebar from './Sidebar'
 
 const Wrapper = styled.div`
-    height: 100%;  
+    height: 100%;
 `
 
 const MapContainer = styled.div`
@@ -21,14 +21,17 @@ const MapContainer = styled.div`
 
 const Sidebar = styled.div`
     position: absolute;
-    top: 15px;
-    left: 15px;
-    bottom: 15px;
-    width: 250px;
-    overflow: auto;
-    background: rgba(255, 255, 255, 0.8);
-    font-family: "Arial";
-    padding-left: 10px;
+    overflow: hidden;
+    top: calc(47px + 10px);
+    z-index: 4000;
+    background-color: #fff;
+    width: 320px;
+    padding: 10px;
+    border-radius: 0;
+    color: #29323c;
+    right: 10px;
+    margin: auto;
+    box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 1px 1px rgba(16, 22, 26, 0.2), 0 2px 6px rgba(16, 22, 26, 0.2);
 `
 
 // const Sidebar = styled.div`
@@ -76,14 +79,14 @@ const Map = () => {
             window.baseStyle = baseStyleRef.current
     
             // // add sources
-            // Object.entries(sources).forEach(([id, source]) => {
-            //     map.addSource(id, source)
-            // })
+            Object.entries(sources).forEach(([id, source]) => {
+                map.addSource(id, source)
+            })
     
             // // add layers
-            // layers.forEach(layer => {
-            //     map.addLayer(layer, 'waterway-label')
-            // })
+            layers.forEach(layer => {
+                map.addLayer(layer, 'waterway-label')
+            })
         })
 
         // clean up on unmount
@@ -93,8 +96,13 @@ const Map = () => {
     return (
     <Wrapper>
         <Layout />
-        <Sidebar>This map displays the latest population estimates for Congressional districts in the U.S. and compares it to the state's target population for districts. The target population is what the districts would be, ideally, if they were redrawn based on the latest estimates.</Sidebar>
         <MapContainer ref={mapContainer} style={{ width: '100%', height: '100%' }}/>
+        <Sidebar>
+            <p>Texas State District 28</p>
+            <p>Senator or Representative or Assembly(wo)man</p>
+            <p>Dropdown for Asthma rates and Clean Energy jobs</p>
+            <p>Clickable List of Relevant Legislation, 2015-2020</p>
+        </Sidebar>
     </Wrapper>
     )
 

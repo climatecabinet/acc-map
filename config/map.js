@@ -9,12 +9,12 @@ export const config = {
 
 export const sources = {
     upper: {
-        type: 'vector',
-        url: 'mapbox://shelby-green.sldu_mbtiles',
+        type: 'geojson',
+        data: 'https://raw.githubusercontent.com/shelbygreen/acc-map/master/tools/nj-sldu.geojson',
     },
     lower: {
-        type: 'vector',
-        url: 'mapbox://shelby-green.sldl_mbtiles',
+        type: 'geojson',
+        data: 'https://raw.githubusercontent.com/shelbygreen/acc-map/master/tools/nj-sldl.geojson',
     }
 }
 
@@ -22,7 +22,7 @@ export const layers = [
     {
       id: "upper-layer",
       source: "upper",
-      'source-layer': 'sld',
+    //   'source-layer': 'sld',
       type: 'fill',
       paint: {
         'fill-color': 'rgba(255, 87, 51, 0.4)',
@@ -33,7 +33,7 @@ export const layers = [
     {
         id: "lower-layer",
         source: "lower",
-        'source-layer': 'sld',
+        // 'source-layer': 'sld',
         type: 'fill',
         layout: {
             visibility: 'none',
