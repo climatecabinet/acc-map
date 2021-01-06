@@ -24,6 +24,8 @@ export const useData = () => {
     }
   })
 
+  console.log(data);
+
   const index = data.reduce((result, item) => {
     result[item.ccid] = item
     return result
