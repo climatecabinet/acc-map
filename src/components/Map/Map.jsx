@@ -146,6 +146,16 @@ const Map = () => {
                 }
             });
 
+            // change the cursor to pointer when clicking on the upper layer
+            map.on('mouseenter', 'upper-layer', function () {
+                map.getCanvas().style.cursor = 'pointer';
+            })
+
+            // change the cursor back when clicking on the upper layer
+            map.on('mouseleave', 'upper-layer', function () {
+                map.getCanvas().style.cursor = '';
+            })
+
         });
 
         // clean up on unmount
