@@ -37,23 +37,23 @@ const Sidebar = styled.div`
     box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 1px 1px rgba(16, 22, 26, 0.2), 0 2px 6px rgba(16, 22, 26, 0.2);
 `
 
-const Tooltip = ({ feature }) => {
-    const { id } = feature.properties;
+// const Tooltip = ({ feature }) => {
+//     const { id } = feature.properties;
   
-    return (
-      <div id={`tooltip-${id}`}>
-        <strong>State:</strong> {feature.properties.state_abbr}
-        <br />
-        <strong>District Number:</strong> {feature.properties.name}
-        <br />
-        <strong>Incumbent:</strong> {feature.properties.incumbents}
-        <br />
-        <strong>Asthma Rate (%):</strong> {feature.properties.asthma}
-        <br />
-        <strong>Clean Jobs (%):</strong> {feature.properties.jobs}
-      </div>
-    );
-};
+//     return (
+//       <div id={`tooltip-${id}`}>
+//         <strong>State:</strong> {feature.properties.state_abbr}
+//         <br />
+//         <strong>District Number:</strong> {feature.properties.name}
+//         <br />
+//         <strong>Incumbent:</strong> {feature.properties.incumbents}
+//         <br />
+//         <strong>Asthma Rate (%):</strong> {feature.properties.asthma}
+//         <br />
+//         <strong>Clean Jobs (%):</strong> {feature.properties.jobs}
+//       </div>
+//     );
+// };
 
 // const Sidebar = styled.div`
 //     position: absolute;
@@ -80,10 +80,10 @@ const Map = () => {
     const mapRef = useRef(null)
     const baseStyleRef = useRef(null)
     const [activeLayer, setActiveLayer] = useState('upper') // options are upper and lower
-    const tooltipRef = useRef(new mapboxgl.Popup({ offset: 15 }))
+    // const tooltipRef = useRef(new mapboxgl.Popup({ offset: 15 }))
 
-    // put local data here?
-    const data = useData()
+    // put local data here
+    const [data, index] = useData()
 
     // initialize map when component mounts
     useEffect(() => {
@@ -91,8 +91,8 @@ const Map = () => {
         const map = new mapboxgl.Map({
             container: mapContainer.current,
             style: `mapbox://styles/mapbox/light-v10`,
-            center: [-98.419172, 31.691066],
-            zoom: 3.5, 
+            center: [-74.53817868495557, 40.344524328768934],
+            zoom: 8, 
             minZoom: 2
         })
 
@@ -105,11 +105,11 @@ const Map = () => {
             baseStyleRef.current = fromJS(map.getStyle())
             window.baseStyle = baseStyleRef.current
 
-            map.addLayer({ 
-              'id': 'upper',
+            map.addLayer({ //here we are adding a layer containing the tileset we just uploaded
+              'id': 'upper',//this is the name of our layer, which we will need later
               'source': {
                 'type': 'geojson',
-                'data': 'https://raw.githubusercontent.com/shelbygreen/acc-map/master/tools/nj-sldu.geojson'
+                'data': 'https://raw.githubusercontent.com/shelbygreen/acc-map/master/tools/nj-sldu.geojson' // <--- Add the Map ID you copied here
               },
               'type': 'fill',
               'paint': {
@@ -121,46 +121,72 @@ const Map = () => {
             // map.setFilter('upper', ['in', 'ccid'].concat(['34027U', '34034U', '34006U', '34020U']));
 
             map.on('click', 'upper', function (mapElement) {
-                const ccidCode = mapElement.features[0].properties.ccid // grabs the ccid in the upper layer
+                const ccidCode = mapElement.features[0].properties.ccid 
 
-                // use the ccidCode to filter the mongodb data (stored in the data variable)
-                // add that data to the feature properties
-                // based on a custom schema?
-
-                // console.log(data);
-
-                // tooltip features. can modify to rely on mapbox popup code instead
-                const features = map.queryRenderedFeatures(mapElement);
-                if (features.length) {
-                    const feature = features[0];
-
-                    // Create tooltip node
-                    const tooltipNode = document.createElement('div');
-                    ReactDOM.render(<Tooltip feature={feature} />, tooltipNode);
-
-                    // Set tooltip on map
-                    tooltipRef.current
-                    .setLngLat(mapElement.lngLat)
-                    .setDOMContent(tooltipNode)
-                    .addTo(map);
-                }
+                const html = ` 
+                    <strong>State:</strong> ${index.getIn([ccidCode, 'state_abbr'])}
+                    <br />
+                    <strong>District Number:</strong> ${index.getIn([ccidCode, 'district_no'])}
+                    <br />
+                    <strong>Incumbent:</strong> ${index.getIn([ccidCode, 'full_name'])}
+                    <br />
+                    <strong>Adult Asthma Rate (%):</strong> ${((100 * index.getIn([ccidCode, 'asthma', 'child'])) / index.getIn([ccidCode, 'asthma', 'population'])).toFixed(2)}
+                    <br />
+                    <strong>Clean Jobs (%):</strong> ${index.getIn([ccidCode, 'jobs', 'perc_of_state_jobs'])}
+                `; // Now we have a good looking popup HTML segment.
+                new mapboxgl.Popup() //Create a new popup
+                .setLngLat(mapElement.lngLat) // Set where we want it to appear (where we clicked)
+                .setHTML(html) // Add the HTML we just made to the popup
+                .addTo(map); // Add the popup to the map
             });
 
-            // change the cursor to pointer when clicking on the upper layer
-            map.on('mouseenter', 'upper-layer', function () {
-                map.getCanvas().style.cursor = 'pointer';
-            })
-
-            // change the cursor back when clicking on the upper layer
-            map.on('mouseleave', 'upper-layer', function () {
-                map.getCanvas().style.cursor = '';
-            })
-
         });
+          
+        // change cursor to pointer when user hovers over a clickable feature
+        map.on('mouseenter', e => {
+            if (e.features.length) {
+                map.getCanvas().style.cursor = 'pointer';
+            }
+        });
+
+        // // pop-up features
+        // map.on('click', (e) => {
+        //     const features = map.queryRenderedFeatures(e.point);
+        //     if (features.length) {
+        //         const feature = features[0];
+
+        //     // Create tooltip node
+        //     const tooltipNode = document.createElement('div');
+        //     ReactDOM.render(<Tooltip feature={feature} />, tooltipNode);
+
+        //     // Set tooltip on map
+        //     tooltipRef.current
+        //     .setLngLat(e.lngLat)
+        //     .setDOMContent(tooltipNode)
+        //     .addTo(map);
+        //     }
+        // });
+
+        // map.on('click', ('upper-layer', function (e)) {
+        //     new mapboxgl.Popup()
+        //     .setLngLat(e.lngLat)
+        //     .setHTML(e.features[0].properties.name)
+        //     .addTo(map);
+        // })
+
+        // show popup on click
+        // map.on('mouseenter', 'upper-layer', function () {
+        //     map.getCanvas().style.cursor = 'pointer';
+        //     })
+             
+        // // change it back to a pointer when it leaves
+        // map.on('mouseleave', 'upper-layer', function () {
+        //     map.getCanvas().style.cursor = '';
+        // })
 
         // clean up on unmount
         return () => map.remove();
-    }, [data])
+    }, [])
 
     // toggle visibility of Senate and House layers
     const handleLayerToggle = newLayer => {
