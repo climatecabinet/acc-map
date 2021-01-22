@@ -7,11 +7,12 @@ export const useData = () => {
   query {
     allMongodbRegions {
       regions {
+        _id
         state_fips
         state_abbr
         ccid
         name
-        incumbent
+        incumbents
         district_no
         asthma {
           population
@@ -30,39 +31,22 @@ export const useData = () => {
           }
         }
       }
+      representatives {
+        _id
+        full_name
+        party
+        role
+      }
     }
   }
   `).allMongodbRegions.regions.map(region => {
     const { ccid } = region
 
     return { 
-      ...region, 
-      // ccid: parseInt(ccid,10)
+      ...region
     }
   })
-
-  // console.log(data);
-
-  // const representativesData = useStaticQuery(graphql`
-  //   query {
-  //     allMongodbRegions {
-  //       representatives {
-  //           full_name
-  //           party
-  //           role
-  //       }
-  //     }
-  //   }
-  //   `).allMongodbRegions.representatives.map(representative => {
-  //     const { ccid } = representative
-
-  //     return {
-  //       ...representative
-  //     }
-  //   })
-
-  // data = [regionsData, representativesData]
-
+  
   const index = data.reduce((result, item) => {
     result[item.ccid] = item
     return result
@@ -75,6 +59,10 @@ export const useData = () => {
 
   return [fromJS(data), fromJS(index)] // the index is the ccid (as a string)
 }
+
 // helpful documentation for working with immutable lists:
 // https://thomastuts.com/blog/immutable-js-101-maps-lists.html
 // https://immutable-js.github.io/immutable-js/, specifically the Nested Structures section
+
+// help documentation for merging objects and arrays:
+// https://stackoverflow.com/questions/46849286/merge-two-array-of-objects-based-on-a-key

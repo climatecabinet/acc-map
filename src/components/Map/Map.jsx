@@ -55,17 +55,6 @@ const Sidebar = styled.div`
 //     );
 // };
 
-// const Sidebar = styled.div`
-//     position: absolute;
-//     top: 100px;
-//     right: 50px;
-//     width: 320px;
-//     overflow: auto;
-//     background: #FFF;
-//     padding: 10px;
-//     box-shadow: 0 0 0 1px rgba(16,22,26,.1), 0 1px 1px rgba(16,22,26,.2), 0 2px 6px rgba(16,22,26,.2);
-// `
-
 const mapboxToken = siteMetadata.mapboxToken
 
 const Map = () => {
@@ -82,7 +71,7 @@ const Map = () => {
     const [activeLayer, setActiveLayer] = useState('upper') // options are upper and lower
     // const tooltipRef = useRef(new mapboxgl.Popup({ offset: 15 }))
 
-    // put local data here
+    // data from MongoDB/GraphQL query
     const [data, index] = useData()
 
     // initialize map when component mounts
@@ -99,14 +88,14 @@ const Map = () => {
         mapRef.current = map
         window.map = map
 
-        map.on('load', () => { //On map load, we want to do some stuff
+        map.on('load', () => { 
 
             // snapshot existing map config
             baseStyleRef.current = fromJS(map.getStyle())
             window.baseStyle = baseStyleRef.current
 
-            map.addLayer({ //here we are adding a layer containing the tileset we just uploaded
-              'id': 'upper',//this is the name of our layer, which we will need later
+            map.addLayer({ 
+              'id': 'upper',
               'source': {
                 'type': 'geojson',
                 'data': 'https://raw.githubusercontent.com/shelbygreen/acc-map/master/tools/nj-sldu.geojson' // <--- Add the Map ID you copied here
@@ -118,26 +107,23 @@ const Map = () => {
               }
             });
 
-            // map.setFilter('upper', ['in', 'ccid'].concat(['34027U', '34034U', '34006U', '34020U']));
-
             map.on('click', 'upper', function (mapElement) {
                 const ccidCode = mapElement.features[0].properties.ccid 
 
                 const html = ` 
-                    <strong>State:</strong> ${index.getIn([ccidCode, 'state_abbr'])}
+                    <strong>${index.getIn([ccidCode, 'state_abbr'])} State District ${index.getIn([ccidCode, 'district_no'])}</strong>
                     <br />
-                    <strong>District Number:</strong> ${index.getIn([ccidCode, 'district_no'])}
-                    <br />
-                    <strong>Incumbent:</strong> ${index.getIn([ccidCode, 'full_name'])}
+                    <strong>Incumbent:</strong> ${index.getIn([ccidCode, 'incumbents', 0])}
                     <br />
                     <strong>Adult Asthma Rate (%):</strong> ${((100 * index.getIn([ccidCode, 'asthma', 'child'])) / index.getIn([ccidCode, 'asthma', 'population'])).toFixed(2)}
                     <br />
                     <strong>Clean Jobs (%):</strong> ${index.getIn([ccidCode, 'jobs', 'perc_of_state_jobs'])}
-                `; // Now we have a good looking popup HTML segment.
-                new mapboxgl.Popup() //Create a new popup
-                .setLngLat(mapElement.lngLat) // Set where we want it to appear (where we clicked)
-                .setHTML(html) // Add the HTML we just made to the popup
-                .addTo(map); // Add the popup to the map
+                `; 
+                
+                new mapboxgl.Popup() 
+                .setLngLat(mapElement.lngLat)
+                .setHTML(html)
+                .addTo(map);
             });
 
         });
@@ -222,7 +208,7 @@ const Map = () => {
                         onChange={handleLayerToggle}
                     /> */}
         <Sidebar>
-            <p></p>
+            <p>move popup information to here and style according to Sketch</p>
             <p>Texas State District 28</p>
             <p>Senator or Representative</p>
             <p>Dropdown for Asthma rates and Clean Energy jobs</p>

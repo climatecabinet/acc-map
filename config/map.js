@@ -24,7 +24,7 @@ export const layers = [
       source: "upper",
     //   'source-layer': 'sld',
       type: 'fill',
-      paint: {
+      paint: { // put choropleth options
         'fill-color': 'rgba(255, 87, 51, 0.4)',
         'fill-outline-color': 'rgba(255, 75, 37, 1)'
       },

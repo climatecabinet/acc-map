@@ -1,15 +1,16 @@
 const config = require('./config/meta');
 const {createHttpLink} = require("apollo-link-http");
 const fetch = require("isomorphic-fetch");
-// const dotenv = require("dotenv");
 
-// dotenv.config();
+// require("dotenv").config({
+//   path: `.env.${process.env.NODE_ENV}`,
+// })
 
 module.exports = {
   siteMetadata: {
-    title: `Climate Cabinet's Climate Data Explorer`,
-    description: `An interactive database to explore climate and socioeconomic data in state legislative districts.`,
-    author: `@sgreen`,
+    title: config.siteTitle,
+    description: config.siteDescription,
+    author: config.schema.author,
     mapboxToken: `pk.eyJ1IjoicGFzaWgiLCJhIjoiY2pybzJqdTVjMHJzeDQ0bW80aGdzaXV3ayJ9.yxD8Nqu7FLnf8-lBo7F1zQ`
   },
   plugins: [
