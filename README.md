@@ -14,8 +14,7 @@ Objective: Create an interactive database that details the climate-related data 
 * Clone the repository locally, in the terminal, using the SSH url -- git clone git@github.com:shelbygreen/acc-map.git
 
 3. Set up the repo and Install Dependencies
-* In the root of the repo folder, run: yarn run bootstrap
-* And then: yarn test
+* In the root of the repo folder, run: yarn run bootstrap or npm install
 
 4. Create an upstream remote
 * Check the current configured remote repository for your fork -- git remove -v
