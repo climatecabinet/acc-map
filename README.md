@@ -11,7 +11,7 @@ Objective: Create an interactive database that details the climate-related data 
 
 2. Fork and Clone the Repository
 * [Fork](https://docs.github.com/en/github/getting-started-with-github/fork-a-repo) the repository
-* Clone the repository locally, in the terminal, using the SSH url -- git clone...
+* Clone the repository locally, in the terminal, using the SSH url -- git clone git@github.com:shelbygreen/acc-map.git
 
 3. Set up the repo and Install Dependencies
 * In the root of the repo folder, run: yarn run bootstrap
@@ -22,7 +22,7 @@ Objective: Create an interactive database that details the climate-related data 
   * you should see something like:
   > origin    https://github.com/YOUR_USERNAME/YOUR_FORK.git (fetch) <br>
   > origin    https://github.com/YOUR_USERNAME/YOUR_FORK.git (push) <br>
-* Specify a new remote upstream repository that will be synced with the fork --  git remote add upstream SSH url
+* Specify a new remote upstream repository that will be synced with the fork --  git remote add upstream git@github.com:shelbygreen/acc-map.git
 * Verify the new upstream repository you've specified for your fork -- git remote -v
   * you should see something like:
   > origin    https://github.com/YOUR_USERNAME/YOUR_FORK.git (fetch) <br>
