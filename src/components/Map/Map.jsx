@@ -8,7 +8,7 @@ import { useData } from '../Data'
 import styled from '../../../util/style'
 import Layout from '../Layout'
 import LayerToggle from './LayerToggle'
-// import Sidebar from './Sidebar'
+// import Sidebar from '../Sidebar'
 
 const Wrapper = styled.div`
     height: 100%;
@@ -28,32 +28,36 @@ const Sidebar = styled.div`
     top: calc(47px + 30px);
     z-index: 4000;
     background-color: #fff;
-    width: 320px;
+    width: 340px;
     padding: 10px;
     border-radius: 0;
     color: #29323c;
-    right: 10px;
+    right: 30px;
     margin: auto;
     box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 1px 1px rgba(16, 22, 26, 0.2), 0 2px 6px rgba(16, 22, 26, 0.2);
 `
 
-// const Tooltip = ({ feature }) => {
-//     const { id } = feature.properties;
-  
-//     return (
-//       <div id={`tooltip-${id}`}>
-//         <strong>State:</strong> {feature.properties.state_abbr}
-//         <br />
-//         <strong>District Number:</strong> {feature.properties.name}
-//         <br />
-//         <strong>Incumbent:</strong> {feature.properties.incumbents}
-//         <br />
-//         <strong>Asthma Rate (%):</strong> {feature.properties.asthma}
-//         <br />
-//         <strong>Clean Jobs (%):</strong> {feature.properties.jobs}
-//       </div>
-//     );
-// };
+var currDistrict = 'hi';
+
+const Tooltip = ({ feature }) => {
+    const { id } = feature.properties;
+
+    return (
+      <div id={`tooltip-${id}`}>
+        <strong>State:</strong> {feature.properties.name}
+        
+      </div>
+    );
+};
+
+// <br />
+// <strong>District Number:</strong> {feature.properties.name}
+// <br />
+// <strong>Incumbent:</strong> {feature.properties.incumbents}
+// <br />
+// <strong>Asthma Rate (%):</strong> {feature.properties.asthma}
+// <br />
+// <strong>Clean Jobs (%):</strong> {feature.properties.jobs}
 
 const mapboxToken = siteMetadata.mapboxToken
 
@@ -68,6 +72,7 @@ const Map = () => {
     const mapContainer = useRef(null)
     const mapRef = useRef(null)
     const baseStyleRef = useRef(null)
+    const tooltipRef = useRef(new mapboxgl.Popup({ offset: 15 }))
     const [activeLayer, setActiveLayer] = useState('upper') // options are upper and lower
     // const tooltipRef = useRef(new mapboxgl.Popup({ offset: 15 }))
 
@@ -93,37 +98,90 @@ const Map = () => {
             // snapshot existing map config
             baseStyleRef.current = fromJS(map.getStyle())
             window.baseStyle = baseStyleRef.current
+            
+            // add every source
+            Object.entries(sources).forEach(([id, source]) => {
+                map.addSource(id, source)
+            })
+            
+            // add every layer
+            layers.forEach(layer => {
+                map.addLayer(layer)
+            })
 
-            map.addLayer({ 
-              'id': 'upper',
-              'source': {
-                'type': 'geojson',
-                'data': 'https://raw.githubusercontent.com/shelbygreen/acc-map/master/tools/nj-sldu.geojson' // <--- Add the Map ID you copied here
-              },
-              'type': 'fill',
-              'paint': {
-                'fill-color': 'rgba(255, 87, 51, 0.4)',
-                'fill-outline-color': 'rgba(255, 75, 37, 1)'
-              }
-            });
+            //TODO: potentially a faster way than reloading geojson as source.
+            //https://github.com/mapbox/mapbox-gl-js/issues/3018#issuecomment-277117802
+          
+            
+            // map.addLayer({ 
+            //   'id': 'upper',
+            //   'source': {
+            //     'type': 'geojson',
+            //     'data': 'https://raw.githubusercontent.com/shelbygreen/acc-map/master/tools/nj-sldu.geojson' // <--- Add the Map ID you copied here
+            //   },
+            //   'type': 'fill',
+            //   'paint': {
+            //     'fill-color': 'rgba(255, 87, 51, 0.4)',
+            //     'fill-outline-color': 'rgba(240, 85, 55, 0.9)'
+            //   }
+            // })
+            // 
+            // // Shelby -- any idea why this outline thickener isn't showing up?
+            // map.addLayer({ 
+            //   'id': 'upper-outline',
+            //   'source': {
+            //     'type': 'geojson',
+            //     'data': 'https://raw.githubusercontent.com/shelbygreen/acc-map/master/tools/nj-sldu.geojson' // <--- Add the Map ID you copied here
+            //   },
+            //   'type': 'line',
+            //   'paint': {
+            //     'line-width': '6',
+            //     'line-color': 'rgba(50, 50, 50, 0.7)'
+            //   }
+            // });
+            
 
             map.on('click', 'upper', function (mapElement) {
-                const ccidCode = mapElement.features[0].properties.ccid 
-
-                const html = ` 
-                    <strong>${index.getIn([ccidCode, 'state_abbr'])} State District ${index.getIn([ccidCode, 'district_no'])}</strong>
-                    <br />
-                    <strong>Incumbent:</strong> ${index.getIn([ccidCode, 'incumbents', 0])}
-                    <br />
-                    <strong>Adult Asthma Rate (%):</strong> ${((100 * index.getIn([ccidCode, 'asthma', 'child'])) / index.getIn([ccidCode, 'asthma', 'population'])).toFixed(2)}
-                    <br />
-                    <strong>Clean Jobs (%):</strong> ${index.getIn([ccidCode, 'jobs', 'perc_of_state_jobs'])}
-                `; 
+                // const ccidCode = mapElement.features[0].properties.ccid 
+                // 
+                // currDistrict = 'hello'
+                // 
+                // const html = ` 
+                //     <strong>${index.getIn([ccidCode, 'state_abbr'])} State District ${index.getIn([ccidCode, 'district_no'])}</strong>
+                //     <br />
+                //     <strong>Incumbent:</strong> ${index.getIn([ccidCode, 'incumbents', 0])}
+                //     <br />
+                //     <strong>Adult Asthma Rate (%):</strong> ${((100 * index.getIn([ccidCode, 'asthma', 'child'])) / index.getIn([ccidCode, 'asthma', 'population'])).toFixed(2)}
+                //     <br />
+                //     <strong>Clean Jobs (%):</strong> ${index.getIn([ccidCode, 'jobs', 'perc_of_state_jobs'])}
+                // `; 
+                // 
+                // new mapboxgl.Popup() 
+                // .setLngLat(mapElement.lngLat)
+                // .setHTML(html)
+                // .addTo(map);
                 
-                new mapboxgl.Popup() 
-                .setLngLat(mapElement.lngLat)
-                .setHTML(html)
-                .addTo(map);
+                // tooltip features
+                const features = mapElement.features
+                if (features.length) {
+                  const feature = features[0];
+                  
+                  const ccidCode = mapElement.features[0].properties.ccid;
+                  // const stateDistrict = State District ${index.getIn([ccidCode, 'district_no'])
+                  
+                
+                  // Create tooltip node
+                  const tooltipNode = document.createElement('div');
+                  ReactDOM.render(<Tooltip feature={feature} />, tooltipNode);
+                  
+                  // Set tooltip on map
+                  tooltipRef.current
+                  
+                  .setLngLat(mapElement.lngLat)
+                  .setDOMContent(tooltipNode)
+                  .addTo(map);
+                }
+
             });
 
         });
@@ -134,6 +192,7 @@ const Map = () => {
                 map.getCanvas().style.cursor = 'pointer';
             }
         });
+        
 
         // // pop-up features
         // map.on('click', (e) => {
@@ -208,14 +267,17 @@ const Map = () => {
                         onChange={handleLayerToggle}
                     /> */}
         <Sidebar>
-            <p>move popup information to here and style according to Sketch</p>
-            <p>Texas State District 28</p>
-            <p>Senator or Representative</p>
-            <p>Dropdown for Asthma rates and Clean Energy jobs</p>
-            <p>Clickable List of Relevant Legislation, 2015-2020</p>
+            
         </Sidebar>
     </Wrapper>
     )
+    // 
+    // <p>move popup information to here and style according to Sketch</p>
+    // <p>{currDistrict}</p>
+    // <p>Texas State District 28</p>
+    // <p>Senator or Representative</p>
+    // <p>Dropdown for Asthma rates and Clean Energy jobs</p>
+    // <p>Clickable List of Relevant Legislation, 2015-2020</p>
 
 }
 

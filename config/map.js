@@ -29,6 +29,16 @@ export const layers = [
         'fill-outline-color': 'rgba(255, 75, 37, 1)'
       },
     },
+    
+    {
+        id: "upper-line",
+        source: "upper",
+        type: 'line',
+        paint: {
+            'line-color': '#FFFFFF',
+            'line-width': 6
+      },
+    },
 
     {
         id: "lower-layer",

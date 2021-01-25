@@ -1,0 +1,5 @@
+- purple line in header would look cool as a loading bar
+
+QUESTIONS for SHELBY:
+any idea why this outline thickener isn't showing up?
+how to dynamically update sidebar with cc information upon click?
