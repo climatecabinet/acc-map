@@ -99,10 +99,10 @@ const Map = () => {
             baseStyleRef.current = fromJS(map.getStyle())
             window.baseStyle = baseStyleRef.current
             
-            // add every source
-            Object.entries(sources).forEach(([id, source]) => {
-                map.addSource(id, source)
-            })
+            // // add every source
+            // Object.entries(sources).forEach(([id, source]) => {
+            //     map.addSource(id, source)
+            // })
             
             // add every layer
             layers.forEach(layer => {
@@ -111,7 +111,6 @@ const Map = () => {
 
             //TODO: potentially a faster way than reloading geojson as source.
             //https://github.com/mapbox/mapbox-gl-js/issues/3018#issuecomment-277117802
-          
             
             // map.addLayer({ 
             //   'id': 'upper',
