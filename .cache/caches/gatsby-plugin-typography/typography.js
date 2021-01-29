@@ -1,1 +1,0 @@
-module.exports = require("/Users/jackieennis/Coding/ClimateCabinet Git/insights-explorer/acc-map/config/typography.js")
