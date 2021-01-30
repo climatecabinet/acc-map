@@ -1,3 +1,5 @@
+// Not currently in use -- use Map.jsx instead
+
 import React, { useEffect, useRef, useState} from 'react'
 import PropTypes from 'prop-types'
 import { List, fromJS } from 'immutable'
@@ -29,7 +31,7 @@ const Map = () => {
             'ERROR: Mapbox token is required in gatsby-config.js siteMetadata'
         )
     }
-    
+
     // if there is no window, we cannot render this component
     // if (!hasWindow) {
     //     return null
@@ -49,7 +51,7 @@ const Map = () => {
             container: mapNode.current,
             style: `mapbox://styles/mapbox/light-v10`,
             center: [-98.419172, 31.691066],
-            zoom: 3, 
+            zoom: 3,
             minZoom: 2
         })
 
@@ -64,12 +66,12 @@ const Map = () => {
             // snapshot existing map config
             baseStyleRef.current = fromJS(map.getStyle())
             window.baseStyle = baseStyleRef.current
-      
+
             // add sources
             Object.entries(sources).forEach(([id, source]) => {
               map.addSource(id, source)
             })
-      
+
             // add layers
             layers.forEach(layer => {
               map.addLayer(layer, 'waterway-label')
@@ -112,7 +114,7 @@ const Map = () => {
         // 'fill-color': matchExpression
         // }
         // }, 'admin-1-boundary-bg');
- 
+
 
         // pop-up features
         map.on('click', 'upper-layer', function (e) {
@@ -126,12 +128,12 @@ const Map = () => {
         map.on('mouseenter', 'upper-layer', function () {
             map.getCanvas().style.cursor = 'pointer';
             })
-             
+
         // change it back to a pointer when it leaves
         map.on('mouseleave', 'upper-layer', function () {
             map.getCanvas().style.cursor = '';
         })
-      
+
     }, [])
 
     // toggle visibility of Senate and House layers
@@ -175,4 +177,4 @@ const Map = () => {
     )
 }
 
-export default Map 
+export default Map

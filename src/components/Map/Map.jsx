@@ -19,7 +19,7 @@ const MapContainer = styled.div`
     top: 59px;
     bottom: 0;
     left: 0;
-    right: 0; 
+    right: 0;
 `
 
 const Sidebar = styled.div`
@@ -37,18 +37,16 @@ const Sidebar = styled.div`
     box-shadow: 0 0 0 1px rgba(16, 22, 26, 0.1), 0 1px 1px rgba(16, 22, 26, 0.2), 0 2px 6px rgba(16, 22, 26, 0.2);
 `
 
-var currDistrict = 'hi';
-
-const Tooltip = ({ feature }) => {
-    const { id } = feature.properties;
-
-    return (
-      <div id={`tooltip-${id}`}>
-        <strong>State:</strong> {feature.properties.name}
-        
-      </div>
-    );
-};
+// const Tooltip = ({ feature }) => {
+//     const { id } = feature.properties;
+//
+//     return (
+//       <div id={`tooltip-${id}`}>
+//         <strong>State:</strong> {feature.properties.name}
+//
+//       </div>
+//     );
+// };
 
 // <br />
 // <strong>District Number:</strong> {feature.properties.name}
@@ -86,112 +84,117 @@ const Map = () => {
             container: mapContainer.current,
             style: `mapbox://styles/mapbox/light-v10`,
             center: [-74.53817868495557, 40.344524328768934],
-            zoom: 8, 
+            zoom: 8,
             minZoom: 2
         })
 
         mapRef.current = map
         window.map = map
 
-        map.on('load', () => { 
+        map.on('load', () => {
 
             // snapshot existing map config
             baseStyleRef.current = fromJS(map.getStyle())
             window.baseStyle = baseStyleRef.current
-            
-            // // add every source
-            // Object.entries(sources).forEach(([id, source]) => {
-            //     map.addSource(id, source)
+
+            // // // add every source
+            // // Object.entries(sources).forEach(([id, source]) => {
+            // //     map.addSource(id, source)
+            // // })
+            //
+            // // add every layer
+            // layers.forEach(layer => {
+            //     map.addLayer(layer)
             // })
-            
-            // add every layer
-            layers.forEach(layer => {
-                map.addLayer(layer)
-            })
 
             //TODO: potentially a faster way than reloading geojson as source.
             //https://github.com/mapbox/mapbox-gl-js/issues/3018#issuecomment-277117802
-            
-            // map.addLayer({ 
-            //   'id': 'upper',
-            //   'source': {
-            //     'type': 'geojson',
-            //     'data': 'https://raw.githubusercontent.com/shelbygreen/acc-map/master/tools/nj-sldu.geojson' // <--- Add the Map ID you copied here
-            //   },
-            //   'type': 'fill',
-            //   'paint': {
-            //     'fill-color': 'rgba(255, 87, 51, 0.4)',
-            //     'fill-outline-color': 'rgba(240, 85, 55, 0.9)'
-            //   }
-            // })
-            // 
-            // // Shelby -- any idea why this outline thickener isn't showing up?
-            // map.addLayer({ 
-            //   'id': 'upper-outline',
-            //   'source': {
-            //     'type': 'geojson',
-            //     'data': 'https://raw.githubusercontent.com/shelbygreen/acc-map/master/tools/nj-sldu.geojson' // <--- Add the Map ID you copied here
-            //   },
-            //   'type': 'line',
-            //   'paint': {
-            //     'line-width': '6',
-            //     'line-color': 'rgba(50, 50, 50, 0.7)'
-            //   }
-            // });
-            
+
+            map.addLayer({
+              'id': 'upper',
+              'source': {
+                'type': 'geojson',
+                'data': 'https://raw.githubusercontent.com/shelbygreen/acc-map/master/tools/nj-sldu.geojson' // <--- Add the Map ID you copied here
+              },
+              'type': 'fill',
+              'paint': {
+                'fill-color': 'rgba(255, 87, 51, 0.4)',
+                'fill-outline-color': 'rgba(240, 85, 55, 0.9)'
+              }
+            })
+
+            // Shelby -- any idea why this outline thickener isn't showing up?
+            map.addLayer({
+              'id': 'upper-outline',
+              'source': {
+                'type': 'geojson',
+                'data': 'https://raw.githubusercontent.com/shelbygreen/acc-map/master/tools/nj-sldu.geojson' // <--- Add the Map ID you copied here
+              },
+              'type': 'line',
+              'paint': {
+                'line-width': '6',
+                'line-color': 'rgba(50, 50, 50, 0.7)'
+              }
+            });
+
 
             map.on('click', 'upper', function (mapElement) {
-                // const ccidCode = mapElement.features[0].properties.ccid 
-                // 
-                // currDistrict = 'hello'
-                // 
-                // const html = ` 
-                //     <strong>${index.getIn([ccidCode, 'state_abbr'])} State District ${index.getIn([ccidCode, 'district_no'])}</strong>
-                //     <br />
-                //     <strong>Incumbent:</strong> ${index.getIn([ccidCode, 'incumbents', 0])}
-                //     <br />
-                //     <strong>Adult Asthma Rate (%):</strong> ${((100 * index.getIn([ccidCode, 'asthma', 'child'])) / index.getIn([ccidCode, 'asthma', 'population'])).toFixed(2)}
-                //     <br />
-                //     <strong>Clean Jobs (%):</strong> ${index.getIn([ccidCode, 'jobs', 'perc_of_state_jobs'])}
-                // `; 
-                // 
-                // new mapboxgl.Popup() 
-                // .setLngLat(mapElement.lngLat)
-                // .setHTML(html)
-                // .addTo(map);
-                
-                // tooltip features
-                const features = mapElement.features
-                if (features.length) {
-                  const feature = features[0];
-                  
-                  const ccidCode = mapElement.features[0].properties.ccid;
-                  // const stateDistrict = State District ${index.getIn([ccidCode, 'district_no'])
-                  
-                
-                  // Create tooltip node
-                  const tooltipNode = document.createElement('div');
-                  ReactDOM.render(<Tooltip feature={feature} />, tooltipNode);
-                  
-                  // Set tooltip on map
-                  tooltipRef.current
-                  
-                  .setLngLat(mapElement.lngLat)
-                  .setDOMContent(tooltipNode)
-                  .addTo(map);
-                }
+                const ccidCode = mapElement.features[0].properties.ccid
+
+                var popup_test = document.getElementById("floating-card")
+                               //
+                const html = `
+                    <strong>${index.getIn([ccidCode, 'state_abbr'])} State District ${index.getIn([ccidCode, 'district_no'])}</strong>
+                    <br />
+                    <strong>Incumbent:</strong> ${index.getIn([ccidCode, 'incumbents', 0])}
+                    <br />
+                    <strong>Adult Asthma Rate (%):</strong> ${((100 * index.getIn([ccidCode, 'asthma', 'child'])) / index.getIn([ccidCode, 'asthma', 'population'])).toFixed(2)}
+                    <br />
+                    <strong>Clean Jobs (%):</strong> ${index.getIn([ccidCode, 'jobs', 'perc_of_state_jobs'])}
+                `;
+
+                popup_test.innerHTML = html
+
+                new mapboxgl.Popup({
+                  anchor: 'left'
+                })
+
+                .setLngLat(mapElement.lngLat)
+                .setHTML(html)
+                .addTo(map);
+
+                // // tooltip features
+                // const features = mapElement.features
+                // if (features.length) {
+                //   const feature = features[0];
+                //
+                //   const ccidCode = mapElement.features[0].properties.ccid;
+                //   // const stateDistrict = State District ${index.getIn([ccidCode, 'district_no'])
+                //
+                //
+                //   // Create tooltip node
+                //   const tooltipNode = document.createElement('div');
+                //   ReactDOM.render(<Tooltip feature={feature} />, tooltipNode);
+                //
+                //   // Set tooltip on map
+                //   tooltipRef.current
+                //
+                //   .setLngLat(mapElement.lngLat)
+                //   .setDOMContent(tooltipNode)
+                //   .addTo(map);
+                // }
 
             });
 
         });
-          
+
         // change cursor to pointer when user hovers over a clickable feature
         map.on('mouseenter', e => {
             if (e.features.length) {
                 map.getCanvas().style.cursor = 'pointer';
             }
         });
-        
+
 
         // // pop-up features
         // map.on('click', (e) => {
@@ -222,7 +225,7 @@ const Map = () => {
         // map.on('mouseenter', 'upper-layer', function () {
         //     map.getCanvas().style.cursor = 'pointer';
         //     })
-             
+
         // // change it back to a pointer when it leaves
         // map.on('mouseleave', 'upper-layer', function () {
         //     map.getCanvas().style.cursor = '';
@@ -265,12 +268,12 @@ const Map = () => {
                         ]}
                         onChange={handleLayerToggle}
                     /> */}
-        <Sidebar>
-            
-        </Sidebar>
+        <Sidebar> <div class="col-lg-3" id="floating-card"><p>"hello"</p></div> </Sidebar>
+
+
     </Wrapper>
     )
-    // 
+    //
     // <p>move popup information to here and style according to Sketch</p>
     // <p>{currDistrict}</p>
     // <p>Texas State District 28</p>
