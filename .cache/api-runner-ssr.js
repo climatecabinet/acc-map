@@ -1,14 +1,14 @@
 var plugins = [{
-      plugin: require('/Users/jackieennis/Coding/ClimateCabinet Git/insights-explorer/acc-map/node_modules/gatsby-plugin-react-helmet/gatsby-ssr'),
+      plugin: require('/Users/shelbygreen/github/acc-map/node_modules/gatsby-plugin-react-helmet/gatsby-ssr'),
       options: {"plugins":[]},
     },{
-      plugin: require('/Users/jackieennis/Coding/ClimateCabinet Git/insights-explorer/acc-map/node_modules/gatsby-plugin-styled-components/gatsby-ssr'),
-      options: {"plugins":[],"displayName":true,"fileName":false,"minify":true,"transpileTemplateLiterals":true,"pure":false},
+      plugin: require('/Users/shelbygreen/github/acc-map/node_modules/gatsby-plugin-styled-components/gatsby-ssr'),
+      options: {"plugins":[],"displayName":false,"fileName":false,"minify":true,"transpileTemplateLiterals":true,"pure":false},
     },{
-      plugin: require('/Users/jackieennis/Coding/ClimateCabinet Git/insights-explorer/acc-map/node_modules/gatsby-plugin-typography/gatsby-ssr'),
+      plugin: require('/Users/shelbygreen/github/acc-map/node_modules/gatsby-plugin-typography/gatsby-ssr'),
       options: {"plugins":[],"pathToConfigModule":"./config/typography.js"},
     },{
-      plugin: require('/Users/jackieennis/Coding/ClimateCabinet Git/insights-explorer/acc-map/node_modules/gatsby-plugin-manifest/gatsby-ssr'),
+      plugin: require('/Users/shelbygreen/github/acc-map/node_modules/gatsby-plugin-manifest/gatsby-ssr'),
       options: {"plugins":[],"name":"Climate Insights Explorer","short_name":"TBD","description":"An interactive database to explore climate and socioeconomic data for all US state legislative districts.","start_url":"/?utm_source=a2hs","background_color":"#253688","theme_color":"#253688","display":"standalone","icon":"src/images/clicab-icon.jpg","cache_busting_mode":"query","include_favicon":true,"legacy":true,"theme_color_in_head":true,"cacheDigest":"51723acbd2c6545c9d2dd9c16841bbb4"},
     }]
 // During bootstrap, we write requires at top of this file which looks like:

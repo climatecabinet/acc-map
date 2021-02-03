@@ -21,6 +21,12 @@ export const useData = () => {
           non_white
           poverty
         }
+        polling {
+          happening
+          regulate
+          rebates
+          research
+        }
         jobs {
           perc_of_state_jobs
           installations_count {
@@ -39,25 +45,62 @@ export const useData = () => {
       }
     }
   }
-  `).allMongodbRegions.regions.map(region => {
+  `)
+  // .allMongodbRegions.regions.map(region => {
+  //   const { ccid } = region
+
+  //   return { 
+  //     ...region
+  //   }
+  // })
+
+  // const index = data.reduce((result, item) => {
+  //   result[item.ccid] = item
+  //   return result
+  // }, {})
+
+  // if (isDebug) {
+  //   window.data = data
+  //   window.index = index
+  // }
+
+
+  const regionsData = data.allMongodbRegions.regions.map(region => {
     const { ccid } = region
 
     return { 
       ...region
     }
   })
-  
-  const index = data.reduce((result, item) => {
+
+  // const repData = data.allMongodbRegions.representatives.map(representative => {
+  //   const { _id } = representative
+
+  //   return { 
+  //     ...representative
+  //   }
+  // })
+
+  const regionsIndex = regionsData.reduce((result, item) => {
     result[item.ccid] = item
     return result
   }, {})
 
+  // const repIndex = repData.reduce((result, item) => {
+  //   result[item._id] = item
+  //   return result
+  // }, {})
+
+  // console.log(repIndex)
+
   if (isDebug) {
-    window.data = data
-    window.index = index
+    window.data = regionsData
+    window.index = regionsIndex
   }
 
-  return [fromJS(data), fromJS(index)] // the index is the ccid (as a string)
+  // return [fromJS(data), fromJS(index)]
+  return [fromJS(regionsData), fromJS(regionsIndex)]
+  // , fromJS(index)] // the index is the ccid (as a string)
 }
 
 // helpful documentation for working with immutable lists:

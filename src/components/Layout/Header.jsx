@@ -45,18 +45,6 @@ const NavLink = styled(Link)`
   }
 `
 
-const NavItem = styled(Flex).attrs({
-  alignItems: 'center',
-  px: ['0.5em', '0.5rem', '1rem'],
-})``
-
-const ShareIcon = styled(FaMarker)`
-  width: 1em;
-  height: 1em;
-  margin-right: 0.25em;
-  opacity: 0.6;
-`
-
 const Header = ({ siteTitle }) => (
   <Wrapper as="header">
     <Title>

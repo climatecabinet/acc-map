@@ -1,1 +1,1 @@
-module.exports = require("/Users/jackieennis/Coding/ClimateCabinet Git/insights-explorer/acc-map/config/typography.js")
+module.exports = require("/Users/shelbygreen/github/acc-map/config/typography.js")

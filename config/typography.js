@@ -1,5 +1,4 @@
 import Typography from 'typography'
-import { theme as style } from '../util/style'
 
 const theme = {
   baseFontSize: '18px',
