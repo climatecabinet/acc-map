@@ -1,5 +1,33 @@
-- purple line in header would look cool as a loading bar
+BIKE RACK:
+[aesthetic] purple line in header would look cool as a loading bar
 
 QUESTIONS for SHELBY:
-any idea why this outline thickener isn't showing up?
-how to dynamically update sidebar with cc information upon click?
+- any idea why this outline thickener isn't showing up?
+    - relates to the layer that we're clicking. looking into this
+- how to dynamically update sidebar with cc information upon click?
+    - done! 
+
+TODOs:
+- DATA (SG)
+-- add polling sentences to the tooltip
+-- add VA layer by:
+    Option A: merging NJ + VA geojson and uploading to the tools folder
+    Option B: storing NJ and VA geojson into one layer (upper)
+-- add search functionality based on:
+    (1) legislator's name
+    (2) state legislative district
+    (3) address
+-- add next 20 states
+
+- STYLING (JE/SG)
+-- add toggling from Senate to House (SG)
+-- create dropdown bar component (JE/SG) -- next paired programming session
+-- apply dropdown bar component to clean jobs, polling, and asthma rates (JE)
+-- mockup concept and node linking for showing relevant legislation
+
+- MISC. (TK)
+-- move GraphQL API key and Mapbox token into build and production environment variables (rn they're in the gatsby-config file )
+-- removing excess from the layers (check project spec sheet google doc. instructions are in there)
+-- looking into just showing the state at initial view and then show the state leg districts once the state is clicked
+-- dynamic choropleth map (for asthma rates, clean energy job percentages, etc.)
+-- look into what unit testing would look like for this map
