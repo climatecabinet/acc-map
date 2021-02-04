@@ -12,7 +12,10 @@ export const useData = () => {
         state_abbr
         ccid
         name
-        incumbents
+        incumbents {
+          name
+          rep
+        }
         district_no
         asthma {
           population
@@ -37,33 +40,9 @@ export const useData = () => {
           }
         }
       }
-      representatives {
-        _id
-        full_name
-        party
-        role
-      }
     }
   }
   `)
-  // .allMongodbRegions.regions.map(region => {
-  //   const { ccid } = region
-
-  //   return { 
-  //     ...region
-  //   }
-  // })
-
-  // const index = data.reduce((result, item) => {
-  //   result[item.ccid] = item
-  //   return result
-  // }, {})
-
-  // if (isDebug) {
-  //   window.data = data
-  //   window.index = index
-  // }
-
 
   const regionsData = data.allMongodbRegions.regions.map(region => {
     const { ccid } = region
@@ -73,34 +52,17 @@ export const useData = () => {
     }
   })
 
-  // const repData = data.allMongodbRegions.representatives.map(representative => {
-  //   const { _id } = representative
-
-  //   return { 
-  //     ...representative
-  //   }
-  // })
-
   const regionsIndex = regionsData.reduce((result, item) => {
     result[item.ccid] = item
     return result
   }, {})
-
-  // const repIndex = repData.reduce((result, item) => {
-  //   result[item._id] = item
-  //   return result
-  // }, {})
-
-  // console.log(repIndex)
 
   if (isDebug) {
     window.data = regionsData
     window.index = regionsIndex
   }
 
-  // return [fromJS(data), fromJS(index)]
   return [fromJS(regionsData), fromJS(regionsIndex)]
-  // , fromJS(index)] // the index is the ccid (as a string)
 }
 
 // helpful documentation for working with immutable lists:
