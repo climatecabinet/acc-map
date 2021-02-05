@@ -109,9 +109,9 @@ const Map = () => {
     
         map.on('click', 'upper', mapElement => {
 
-            // on click, retrive the ccid and regions.id for the district
+            // on click, retrive the ccid and regions.incumbent.rep id for the district
             const ccidCode = mapElement.features[0].properties.ccid 
-            const regionId = regionsIndex.getIn([ccidCode, '_id']) // will show undefined until Matt updates the incumbent field
+            const incumbentId = regionsIndex.getIn([ccidCode, 'incumbents', 0, 'rep'])
 
             // using the ccid, lookup attributes and store into as html
             const html = `
@@ -121,9 +121,10 @@ const Map = () => {
                 <br />
                 <strong>Clean Jobs (%):</strong> ${regionsIndex.getIn([ccidCode, 'jobs', 'perc_of_state_jobs'])}
                 <br />
-                <strong>Legislator:</strong> ${repIndex.getIn([regionId, '_id'])}
+                <strong>${repIndex.getIn([incumbentId, 'role'])}:</strong> ${repIndex.getIn([incumbentId, 'full_name'])}
                 <br />
-                <strong>Polling</strong><br/>
+                <strong>Polling</strong>
+                <br/>
                 <strong>Happening:</strong> ${regionsIndex.getIn([ccidCode, 'polling', 'happening']).toFixed(2)}
                 <br />
                 <strong>Regulate:</strong> ${regionsIndex.getIn([ccidCode, 'polling', 'regulate']).toFixed(2)}
@@ -174,3 +175,10 @@ const Map = () => {
 }
 
 export default Map
+
+//polling
+{/* <strong>“In the ${} counties that make up [State District #]...”</strong>
+<br />
+happening: “[X]% of adults think global warming is happening compared to the national average of 72% (2020).”
+regulate: “[X]% of adults support regulating CO2 as a pollutant compared to the national average of 75% (2020).”
+rebates: “[X]% of adults support tax rebates for purchasing energy-efficient vehicles or solar panels compared to the national average of 82% (2020).” */}

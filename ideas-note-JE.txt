@@ -1,11 +1,14 @@
 BIKE RACK:
 [aesthetic] purple line in header would look cool as a loading bar
 
-QUESTIONS for SHELBY:
+QUESTIONS:
 - any idea why this outline thickener isn't showing up?
     - relates to the layer that we're clicking. looking into this
 - how to dynamically update sidebar with cc information upon click?
     - done! 
+- for Matt:
+    - does the regions.fragments field consist of counties?
+    - what will the structure for the regions.incumbents array look like? Will it list all of the ids of the elected officials for the region? and then we can look to find out if it is a senator, rep, etc?
 
 TODOs:
 - DATA (SG)
