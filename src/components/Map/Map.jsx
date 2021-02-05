@@ -24,7 +24,8 @@ const MapContainer = styled.div`
 
 const Sidebar = styled.div`
     position: absolute;
-    overflow: hidden;
+    overflow-y: auto;
+    height: 200px;
     top: calc(47px + 30px);
     z-index: 4000;
     background-color: #fff;
@@ -124,14 +125,16 @@ const Map = () => {
                 <strong>${repIndex.getIn([incumbentId, 'role'])}:</strong> ${repIndex.getIn([incumbentId, 'full_name'])}
                 <br />
                 <strong>Polling</strong>
-                <br/>
-                <strong>Happening:</strong> ${regionsIndex.getIn([ccidCode, 'polling', 'happening']).toFixed(2)}
                 <br />
-                <strong>Regulate:</strong> ${regionsIndex.getIn([ccidCode, 'polling', 'regulate']).toFixed(2)}
+                <strong>In the ${regionsIndex.get[ccidCode, 'fragments']} counties that make up ${regionsIndex.getIn([ccidCode, 'state_abbr'])} State District ${parseInt(regionsIndex.getIn([ccidCode, 'district_no']), 10)}...</strong>
                 <br />
-                <strong>Rebates:</strong> ${regionsIndex.getIn([ccidCode, 'polling', 'rebates']).toFixed(2)}
+                <strong>Happening:</strong> ${regionsIndex.getIn([ccidCode, 'polling', 'happening']).toFixed(2)}% of adults think global warming is happening compared to the national average of 72% (2020).
                 <br />
-                <strong>Research:</strong> ${regionsIndex.getIn([ccidCode, 'polling', 'research']).toFixed(2)}
+                <strong>Regulate:</strong> ${regionsIndex.getIn([ccidCode, 'polling', 'regulate']).toFixed(2)}% of adults support regulating CO2 as a pollutant compared to the national average of 75% (2020).
+                <br />
+                <strong>Rebates:</strong> ${regionsIndex.getIn([ccidCode, 'polling', 'rebates']).toFixed(2)}% of adults support tax rebates for purchasing energy-efficient vehicles or solar panels compared to the national average of 82% (2020).
+                <br />
+                <strong>Research:</strong> ${regionsIndex.getIn([ccidCode, 'polling', 'research']).toFixed(2)}% want to see investment in renewable energy research (2020).
             `; 
 
             // create tooltip variable for the floating card div
@@ -175,10 +178,3 @@ const Map = () => {
 }
 
 export default Map
-
-//polling
-{/* <strong>“In the ${} counties that make up [State District #]...”</strong>
-<br />
-happening: “[X]% of adults think global warming is happening compared to the national average of 72% (2020).”
-regulate: “[X]% of adults support regulating CO2 as a pollutant compared to the national average of 75% (2020).”
-rebates: “[X]% of adults support tax rebates for purchasing energy-efficient vehicles or solar panels compared to the national average of 82% (2020).” */}
