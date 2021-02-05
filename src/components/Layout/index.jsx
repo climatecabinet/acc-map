@@ -3,8 +3,8 @@ import PropTypes from 'prop-types'
 import styled, { ThemeProvider, theme } from '../../../util/style'
 
 import { Flex } from '../Grid'
-import { isUnsupported } from '../../../util/dom'
-import UnsupportedBrowser from './UnsupportedBrowser'
+// import { isUnsupported } from '../../../util/dom'
+// import UnsupportedBrowser from './UnsupportedBrowser'
 
 import Header from './Header'
 // import Footer from './Footer'
@@ -24,7 +24,8 @@ const Layout = ({ children }) => (
   <ThemeProvider theme={theme}>
     <Wrapper>
       <Header siteTitle={config.siteTitle} />
-      {isUnsupported ? <UnsupportedBrowser /> : <Content>{children}</Content>}
+      {/* {isUnsupported ? <UnsupportedBrowser /> : } */}
+        <Content>{children}</Content>
       {/* <Footer /> */}
     </Wrapper>
   </ThemeProvider>
