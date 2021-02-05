@@ -20,9 +20,10 @@ TODOs:
     (2) state legislative district
     (3) address
 -- add next 20 states
--- changing the div based on what you're clicking (it relies on the geojson, but our geojson does not the fields from MongoDB. Should we merge these?)
+-- research how to apply a choropleth to the geojson (our geojson does not have the fields from MongoDB. Should we merge these? Or create temporary arrays and add them as a property to the geojson?)
 
 - STYLING (JE/SG)
+-- creating a div component for Asthma Rates and clicking to just show 1 district (small test for figuring how choropleth process)
 -- add toggling from Senate to House (SG)
 -- create dropdown bar component (JE/SG) -- next paired programming session
 -- apply dropdown bar component to clean jobs, polling, and asthma rates (JE)

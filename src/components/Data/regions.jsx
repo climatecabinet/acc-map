@@ -16,6 +16,11 @@ export const useData = () => {
           name
           rep
         }
+        fragments {
+          perc_of_whole
+          population
+          region
+        }
         district_no
         asthma {
           population

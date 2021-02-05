@@ -126,7 +126,7 @@ const Map = () => {
                 <br />
                 <strong>Polling</strong>
                 <br />
-                <strong>In the ${regionsIndex.get[ccidCode, 'fragments']} counties that make up ${regionsIndex.getIn([ccidCode, 'state_abbr'])} State District ${parseInt(regionsIndex.getIn([ccidCode, 'district_no']), 10)}...</strong>
+                <strong>In the ${regionsIndex.getIn([ccidCode, 'fragments']).count()} counties that make up ${regionsIndex.getIn([ccidCode, 'state_abbr'])} State District ${parseInt(regionsIndex.getIn([ccidCode, 'district_no']), 10)}...</strong>
                 <br />
                 <strong>Happening:</strong> ${regionsIndex.getIn([ccidCode, 'polling', 'happening']).toFixed(2)}% of adults think global warming is happening compared to the national average of 72% (2020).
                 <br />
