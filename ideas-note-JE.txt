@@ -12,7 +12,6 @@ QUESTIONS:
 
 TODOs:
 - DATA (SG)
--- add polling sentences to the tooltip
 -- add VA layer by:
     Option A: merging NJ + VA geojson and uploading to the tools folder
     Option B: storing NJ and VA geojson into one layer (upper)
@@ -21,6 +20,7 @@ TODOs:
     (2) state legislative district
     (3) address
 -- add next 20 states
+-- changing the div based on what you're clicking (it relies on the geojson, but our geojson does not the fields from MongoDB. Should we merge these?)
 
 - STYLING (JE/SG)
 -- add toggling from Senate to House (SG)
