@@ -117,14 +117,16 @@ const Map = () => {
             // using the ccid, lookup attributes and store into as html
             const html = `
                 <center><strong>${regionsIndex.getIn([ccidCode, 'state_abbr'])} State District ${parseInt(regionsIndex.getIn([ccidCode, 'district_no']), 10)}</strong></center>
+                <br/>
+                <strong>${repIndex.getIn([incumbentId, 'role'])}:</strong> ${repIndex.getIn([incumbentId, 'full_name'])}
+                <br />
                 <br />
                 <strong>Adult Asthma Rate (%):</strong> ${((100 * regionsIndex.getIn([ccidCode, 'asthma', 'child'])) / regionsIndex.getIn([ccidCode, 'asthma', 'population'])).toFixed(2)}
                 <br />
                 <strong>Clean Jobs (%):</strong> ${regionsIndex.getIn([ccidCode, 'jobs', 'perc_of_state_jobs'])}
                 <br />
-                <strong>${repIndex.getIn([incumbentId, 'role'])}:</strong> ${repIndex.getIn([incumbentId, 'full_name'])}
-                <br />
-                <strong>Polling</strong>
+                <br/>
+                <center><strong>Polling</strong></center>
                 <br />
                 <strong>In the ${regionsIndex.getIn([ccidCode, 'fragments']).count()} counties that make up ${regionsIndex.getIn([ccidCode, 'state_abbr'])} State District ${parseInt(regionsIndex.getIn([ccidCode, 'district_no']), 10)}...</strong>
                 <br />
@@ -142,6 +144,24 @@ const Map = () => {
             
             // store html in the tooltip, which will be displayed in the floating card div
             tooltip.innerHTML = html
+            // TODO: add if else statement to show county vs counties when counties count > 1
+
+            // create button variable for the button div
+            // when the button is clicked, update the map to just show 1 district
+            // document.getElementById('filters').addEventListener('change', function(e) {
+            //     const district = e.target.value;
+            //     // update the map filter
+            //     if (district === 'all') {
+            //         filterDistrict = ['!=', ['string', ['get', 'ccid']], 'placeholder'];
+            //     } else if (district === '27') {
+            //         filterDistrict = ['match', ['get', 'ccid'], '34027U', true, false];
+            //     }
+            //     else {
+            //         console.log('error');
+            //     }
+
+            //     map.setFilter('upper', ['all', filterDistrict]);
+            // });
 
         });
 
@@ -170,6 +190,14 @@ const Map = () => {
             <div id="floating-card">
             <b>Is My District prepared for Climate Change?</b>
             <p>This map displays climate-specific legislation and socioeconomic data for all US state legislative districts.</p>
+            <div class='row' id='filters'>
+                    <input id='all' type='radio' name='toggle' value='all' checked='checked' />
+                        <label for='all'>Show all districts</label>
+                    {/* </input> */}
+                    <input id='27' type='radio' name='toggle' value='27' />
+                        <label for='27'>Show Senate District 27</label>
+                    {/* </input> */}
+                </div>
             </div>
         </Sidebar>
     </Wrapper>
