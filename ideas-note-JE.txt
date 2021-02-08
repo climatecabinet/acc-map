@@ -15,19 +15,20 @@ TODOs:
 -- add VA layer by:
     Option A: merging NJ + VA geojson and uploading to the tools folder
     Option B: storing NJ and VA geojson into one layer (upper)
+-- add lower districts (for NJ and VA)
 -- add search functionality based on:
     (1) legislator's name
     (2) state legislative district
     (3) address
 -- add next 20 states
 -- research how to apply a choropleth to the geojson (our geojson does not have the fields from MongoDB. Should we merge these? Or create temporary arrays and add them as a property to the geojson?)
+-- mockup concept and node linking for showing relevant legislation
 
 - STYLING (JE/SG)
 -- creating a div component for Asthma Rates and clicking to just show 1 district (small test for figuring how choropleth process)
 -- add toggling from Senate to House (SG)
 -- create dropdown bar component (JE/SG) -- next paired programming session
 -- apply dropdown bar component to clean jobs, polling, and asthma rates (JE)
--- mockup concept and node linking for showing relevant legislation
 
 - MISC. (TK)
 -- move GraphQL API key and Mapbox token into build and production environment variables (rn they're in the gatsby-config file )
