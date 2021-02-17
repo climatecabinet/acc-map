@@ -6,11 +6,12 @@ import { DefaultButton, PrimaryButton } from './Button'
 import ButtonGroup from './ButtonGroup'
 
 const Button = styled(PrimaryButton)`
+  background-color: ${themeGet('colors.primary.500')};
   flex: 1 1 auto;
 `
 
 const InactiveButton = styled(DefaultButton)`
-  background-color: ${themeGet('colors.primary.100')};
+  background-color: ${themeGet('colors.grey.400')};
   color: ${themeGet('colors.grey.900')};
   flex: 1 1 auto;
 `

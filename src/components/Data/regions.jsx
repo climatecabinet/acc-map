@@ -6,7 +6,7 @@ export const useData = () => {
   const data = useStaticQuery(graphql`
   query {
     allMongodbRegions {
-      regions {
+      regions(limit: 10000) {
         _id
         state_fips
         state_abbr

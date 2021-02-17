@@ -6,14 +6,18 @@ import { ToggleButton } from '../Button'
 
 import styled from '../../../util/style'
 
-const Wrapper = styled(Flex).attrs({ alignItems: 'center', p: '0.5rem' })`
-  position: absolute;
-  top: 0;
-  left: 10px;
-  z-index: 1000;
-  background: #fff;
-  border-radius: 0 0 0.25rem 0.25rem;
-  box-shadow: 1px 1px 8px #333;
+// const Wrapper = styled(Flex).attrs({ alignItems: 'center', p: '0.5rem' })`
+//   position: absolute;
+//   top: 0;
+//   left: 10px;
+//   z-index: 1000;
+//   background: #fff;
+//   border-radius: 0 0 0.25rem 0.25rem;
+//   box-shadow: 1px 1px 8px #333;
+// `
+
+const Wrapper = styled.div`
+    height: 100%;
 `
 
 const TopBarToggle = styled(ToggleButton)`
@@ -27,7 +31,6 @@ const TopBarToggle = styled(ToggleButton)`
 
 const LayerToggle = ({ value, options, onChange }) => (
   <Wrapper>
-    Show:
     <TopBarToggle value={value} options={options} onChange={onChange} />
   </Wrapper>
 )
