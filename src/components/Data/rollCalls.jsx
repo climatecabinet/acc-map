@@ -2,40 +2,42 @@ import { graphql, useStaticQuery } from 'gatsby'
 import { fromJS } from 'immutable'
 import { isDebug } from '../../../util/dom'
 
-export const useRepData = () => {
+export const useRollCallData = () => {
   const data = useStaticQuery(graphql`
   query {
     allMongodbRegions {
-      representatives(limit: 10000) {
+      roll_calls(limit: 200000) {
+        bill_id
+        passed
         _id
-        full_name
-        party
-        role
+        nay
+        total
+        session
         legiscan_id
       }
     }
   }
   `)
 
-  const repData = data.allMongodbRegions.representatives.map(representative => {
-    const { _id } = representative
+  const rollCallData = data.allMongodbRegions.roll_calls.map(roll_call => {
+    const { legiscan_id } = roll_call
 
     return { 
-      ...representative
+      ...roll_call
     }
   })
 
-  const repIndex = repData.reduce((result, item) => {
-    result[item._id] = item
+  const rollCallIndex = rollCallData.reduce((result, item) => {
+    result[item.legiscan_id] = item
     return result
   }, {})
 
   if (isDebug) {
-    window.data = repData
-    window.index = repIndex
+    window.data = rollCallData
+    window.index = rollCallIndex
   }
 
-  return [fromJS(repData), fromJS(repIndex)]
+  return [fromJS(rollCallData), fromJS(rollCallIndex)]
 }
 
 // helpful documentation for working with immutable lists:

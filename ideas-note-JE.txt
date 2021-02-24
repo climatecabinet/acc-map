@@ -8,14 +8,13 @@ QUESTIONS:
     - done! 
 - for Matt:
     - does the regions.fragments field consist of counties?
+        - yes
     - what will the structure for the regions.incumbents array look like? Will it list all of the ids of the elected officials for the region? and then we can look to find out if it is a senator, rep, etc?
+        - anything that we want it to look like. schema is flexible
 
 TODOs:
 - DATA (SG)
--- add VA layer by:
-    Option A: merging NJ + VA geojson and uploading to the tools folder
-    Option B: storing NJ and VA geojson into one layer (upper)
--- add lower districts (for NJ and VA)
+-- research how to query faster (static graph ql)
 -- add search functionality based on:
     (1) legislator's name
     (2) state legislative district

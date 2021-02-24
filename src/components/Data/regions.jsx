@@ -7,27 +7,17 @@ export const useData = () => {
   query {
     allMongodbRegions {
       regions(limit: 10000) {
-        _id
-        state_fips
         state_abbr
         ccid
-        name
         incumbents {
           name
           rep
-        }
-        fragments {
-          perc_of_whole
-          population
-          region
         }
         district_no
         asthma {
           population
           adult
           child
-          non_white
-          poverty
         }
         polling {
           happening

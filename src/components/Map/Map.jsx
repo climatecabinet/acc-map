@@ -5,10 +5,12 @@ import { siteMetadata } from '../../../gatsby-config'
 import { sources, layers,  config } from '../../../config/map'
 import { useData } from '../Data/regions'
 import { useRepData } from '../Data/representatives'
+import { useVoteData } from '../Data/votes'
+import { useRollCallData } from '../Data/rollCalls'
+import { useBillData } from '../Data/bills'
 import styled from '../../../util/style'
 import Layout from '../Layout'
 import LayerToggle from './LayerToggle'
-// import Sidebar from '../Sidebar'
 
 const Wrapper = styled.div`
     height: 100%;
@@ -58,7 +60,12 @@ const Map = () => {
     const [regionsData, regionsIndex] = useData()
     // representatives Data
     const [repData, repIndex] = useRepData()
-    // 
+    // votes data
+    const [voteData, voteIndex] = useVoteData()
+    // roll calls data
+    const [rollCallData, rollCallIndex] = useRollCallData()
+    // bill data
+    const [billData, billIndex] = useBillData()
 
     // initialize map when component mounts
     useEffect(() => {
@@ -106,9 +113,11 @@ const Map = () => {
 
             // also on click, get the ccid and the regions.incumbent.rep id
             // for the point that represents the clicked district
-            // TODO: problem with showing incumbent data via ccidCode. something to do with the indexing?
             const ccidCode = features[0].properties.ccid
             const incumbentId = regionsIndex.getIn([ccidCode, 'incumbents', 0, 'rep'])
+            const legiscanCode = repIndex.getIn([incumbentId, 'legiscan_id'])
+            const rollCallCode = voteIndex.getIn([legiscanCode.toString(), 'roll_call_id'])
+            const billCode = rollCallIndex.getIn([rollCallCode.toString(), 'bill_id'])
 
             // use the ccidCode to lookup the regions data (stored in the regionsIndex variable) and the representatives data (stored in the repIndex variable)
             // the lookup will find the data associated to the district
@@ -135,7 +144,11 @@ const Map = () => {
                 <strong>Research:</strong> ${regionsIndex.getIn([ccidCode, 'polling', 'research']).toFixed(2)}% want to see investment in renewable energy research (2020).
                 <br/>
                 <br/>
-                <center><strong>State Legislation</strong></center>
+                <center><strong>Voting Record</strong></center>
+                ${billIndex.getIn([billCode.toString(), 'description'])}
+                <br/>
+                <br/>
+
             `; 
 
             // create tooltip variable for the floating card div
